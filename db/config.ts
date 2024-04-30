@@ -42,11 +42,11 @@ const LinkUserVote = defineTable({
   }
 })
 
-const FavoriteLinkUser = defineTable({})
+// const FavoriteLinkUser = defineTable({})
 
-const Comment = defineTable({})
+// const Comment = defineTable({})
 
-const CommentUserVote = defineTable({})
+// const CommentUserVote = defineTable({})
 
 export default defineDb({
   tables: { User, Link, LinkUserVote }
