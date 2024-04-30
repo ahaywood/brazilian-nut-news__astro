@@ -1,0 +1,78 @@
+---
+import Comment from "./Comment";
+import CommentForm from "./CommentForm";
+import SharedLink from "./SharedLink.astro";
+
+const { isAuthenticated, link } = Astro.props;
+---
+
+<div>
+  <div class={`${!isAuthenticated && "border-b-2 border-b-icterine"}`}>
+    <SharedLink
+      id={link.id}
+      numberOfComments={link.countComments}
+      countVotes={link.countVotes}
+      submittedBy={{
+        firstName: link.submittedBy.firstName,
+        lastName: link.submittedBy.lastName,
+        nickname: link.submittedBy.nickname,
+      }}
+      title={link.title}
+      url={link.link}
+      lastUpdated={link.updatedAt ? link.updatedAt : link.createdAt}
+      currentUserVote={link.currentUserVote}
+      favorited={link.currentUserFavorite}
+    />
+  </div>
+  <div class="page-grid">
+    <div class="limit-page-width">
+      <div class={`${isAuthenticated ? "pb-14" : "pb-6"} pl-leftGutter`}>
+        {/* featured comment form */}
+        {
+          isAuthenticated && (
+            <CommentForm size="large" isCollapsible={false} linkId={link.id} />
+          )
+        }
+      </div>
+      {
+        link.comments.map((comment) => {
+          return (
+            <Comment
+              key={comment.id}
+              commentedBy={{
+                firstName: comment.author.firstName,
+                lastName: comment.author.lastName,
+                nickname: comment.author.nickname,
+              }}
+              lastUpdated={
+                comment.updatedAt ? comment.updatedAt : comment.createdAt
+              }
+              body={comment.body}
+              id={comment.id}
+              linkId={link.id}
+            >
+              <div>
+                {comment.childComments &&
+                  comment.childComments.map((child) => (
+                    <Comment
+                      isChildComment={true}
+                      key={child.id}
+                      commentedBy={{
+                        firstName: child.author.firstName,
+                        lastName: child.author.lastName,
+                        nickname: child.author.nickname,
+                      }}
+                      lastUpdated={
+                        child.updatedAt ? child.updatedAt : child.createdAt
+                      }
+                      body={child.body}
+                    />
+                  ))}
+              </div>
+            </Comment>
+          );
+        })
+      }
+    </div>
+  </div>
+</div>

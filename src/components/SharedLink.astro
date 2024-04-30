@@ -1,0 +1,102 @@
+---
+import { formatRelativeTime } from "../helpers/dateHelpers";
+import Icon from "./Icon";
+
+const {
+  numberOfComments,
+  favorited,
+  currentUserVote,
+  isAuthenticated,
+  id,
+  title,
+  countVotes,
+  lastUpdated,
+  submittedBy,
+  url,
+} = Astro.props;
+
+const handleVote = () => {};
+---
+
+<div class="shared-link flex w-full gap-x-5 pb-6 pl-4 pr-8 pt-8">
+  {/* vote */}
+  <div class="flex flex-col">
+    {
+      isAuthenticated && (
+        <>
+          <button
+            class={`up ${currentUserVote === "UP" ? "filled" : ""}`}
+            data-testid="voteUpButton"
+          >
+            <Icon id="up" />
+          </button>
+          <button
+            class={`down ${currentUserVote === "DOWN" ? "filled" : ""}`}
+            data-testid="voteDownButton"
+          >
+            <Icon id="up" className="rotate-180" />
+          </button>
+        </>
+      )
+    }
+  </div>
+
+  {/* content */}
+  <div class="flex-1">
+    <h2 class="font-condensed text-6xl uppercase leading-[0.8]">
+      <a href={`/${id}`} class="text-cinder dark:text-icterine">
+        {title}
+      </a>
+    </h2>
+    <div class="text-medium font-sans text-sm dark:text-icterine">
+      <strong>
+        {countVotes} point{countVotes > 1 && "s"}{" "}
+      </strong>
+      {
+        submittedBy.firstName && submittedBy.lastName && (
+          <>
+            • submitted by{" "}
+            <a
+              href={`/profile/${submittedBy.nickname}`}
+              class="font-bold underline hover:no-underline"
+            >
+              {submittedBy.firstName} {submittedBy.lastName}
+            </a>{" "}
+          </>
+        )
+      }
+      • {formatRelativeTime(lastUpdated)} •{" "}
+      <a
+        href={`/${id}`}
+        class="font-bold underline hover:no-underline"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {numberOfComments} comment{numberOfComments > 1 && "s"}
+      </a>{" "}
+      •{" "}
+      {
+        favorited && isAuthenticated ? (
+          <button class="item-center relative top-1 inline-flex gap-1 underline">
+            <Icon id="heart--filled" size={20} /> Favorited
+          </button>
+        ) : (
+          <button class="item-center relative top-1 inline-flex gap-1 underline">
+            <Icon id="heart--empty" size={20} /> Mark as favorite
+          </button>
+        )
+      }
+    </div>
+  </div>
+
+  {/* arrow */}
+  <a
+    href={url}
+    class="text-cinder dark:text-icterine"
+    target="_blank"
+    rel="noreferrer"
+    data-testid="sharedLinkUrl"
+  >
+    <Icon id="arrow" className="relative top-2 w-14" />
+  </a>
+</div>

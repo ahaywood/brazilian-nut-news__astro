@@ -1,0 +1,41 @@
+---
+import { constants } from "../lib/constants.ts";
+import Nav from "../components/Nav.astro";
+import Header from "../components/Header.astro";
+import "../tailwind.css";
+const { title = "" } = Astro.props.frontmatter || Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Brazilian Nut News {title && `| ${title}`}</title>
+
+    <meta name="twitter:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={constants.OG_TITLE} />
+    <meta name="twitter:description" content={constants.OG_DESCRIPTION} />
+    <meta name="twitter:domain" content={constants.OG_DOMAIN} />
+    <meta name="twitter:summary" content={constants.OG_DESCRIPTION} />
+    <meta property="og:title" content={constants.OG_TITLE} />
+    <meta property="og:image" content="/og.png" />
+    <meta property="og:description" content={constants.OG_DESCRIPTION} />
+    <meta property="og:url" content={constants.OG_DOMAIN} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={constants.OG_TITLE} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={constants.OG_TITLE} />
+    <meta property="og:image:type" content="image/png" />
+  </head>
+  <body>
+    <Nav />
+    <Header />
+    <slot />
+    <!-- the footer is not included on this page because it needs to use the
+        background color of the nested layout -->
+  </body>
+</html>

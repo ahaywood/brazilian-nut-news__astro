@@ -1,0 +1,126 @@
+---
+import Icon from "./Icon";
+const { userByNickname, currentUser } = Astro.props;
+---
+
+<div class="border-b-2 border-b-icterine pb-2">
+  <h1
+    class="max-w-screen overflow-hidden pt-6 text-[19em] leading-[.8] text-white"
+  >
+    <span class="tex-white outline">{userByNickname.firstName}</span>{" "}
+    <span class="text-fountainBlue">{userByNickname.lastName}</span>
+  </h1>
+
+  <div
+    class="flex flex-col items-start justify-between pr-5 md:flex-row md:items-center"
+  >
+    <nav>
+      <ul
+        class="flex flex-col justify-start text-left font-condensed text-3xl uppercase text-fountainBlue md:flex-row md:gap-11 md:text-4xl lg:text-6xl"
+      >
+        <li>
+          <a
+            class="hover:text-white"
+            class="text-icterine"
+            href={`/profile/${userByNickname.nickname}`}
+          >
+            Links Shared
+          </a>
+        </li>
+        <li>
+          <a
+            class="hover:text-white"
+            class="text-icterine"
+            href={`/profile/${userByNickname.nickname}/comments`}
+          >
+            Comments
+          </a>
+        </li>
+        <li>
+          <a
+            class="hover:text-white"
+            class="text-icterine"
+            href={`/profile/${userByNickname.nickname}/favorites`}
+          >
+            Favorites
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    {
+      userByNickname.id === currentUser?.id ? (
+        <a
+          class="font-condensed text-3xl uppercase text-stormDust hover:text-white md:text-4xl lg:text-6xl"
+          class="text-icterine"
+          href={`/profile/${userByNickname.nickname}/edit`}
+        >
+          Edit My Profile
+        </a>
+      ) : (
+        <ul class="flex gap-8 text-stormDust">
+          {userByNickname.github && (
+            <li>
+              <a
+                href={userByNickname.github}
+                target="_blank"
+                rel="noreferrer"
+                class="hover:text-icterine"
+              >
+                <Icon size={42} id="github" />
+              </a>
+            </li>
+          )}
+          {userByNickname.facebook && (
+            <li>
+              <a
+                href={userByNickname.facebook}
+                target="_blank"
+                rel="noreferrer"
+                class="hover:text-icterine"
+              >
+                <Icon size={42} id="facebook" />
+              </a>
+            </li>
+          )}
+          {userByNickname.youtube && (
+            <li>
+              <a
+                href={userByNickname.youtube}
+                target="_blank"
+                rel="noreferrer"
+                class="hover:text-icterine"
+              >
+                <Icon size={42} id="youtube" />
+              </a>
+            </li>
+          )}
+          {userByNickname.linkedin && (
+            <li>
+              <a
+                href={userByNickname.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                class="hover:text-icterine"
+              >
+                <Icon size={42} id="linkedin" />
+              </a>
+            </li>
+          )}
+          {userByNickname.twitter && (
+            <li>
+              <a
+                href={userByNickname.twitter}
+                target="_blank"
+                rel="noreferrer"
+                class="hover:text-icterine"
+              >
+                <Icon size={42} id="twitter" />
+              </a>
+            </li>
+          )}
+        </ul>
+      )
+    }
+  </div>
+</div>

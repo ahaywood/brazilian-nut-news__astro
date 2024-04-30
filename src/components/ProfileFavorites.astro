@@ -1,0 +1,31 @@
+---
+import SharedLink from "./SharedLink.astro";
+const { userByNickname } = Astro.props;
+---
+
+<ul>
+  {
+    userByNickname.favorites.map((item) => {
+      return (
+        <SharedLink
+          key={item.link.id}
+          id={item.link.id}
+          numberOfComments={item.link.countComments}
+          countVotes={item.link.countVotes}
+          submittedBy={{
+            firstName: item.link.submittedBy.firstName,
+            lastName: item.link.submittedBy.lastName,
+            nickname: item.link.submittedBy.nickname,
+          }}
+          title={item.link.title}
+          url={item.link.link}
+          currentUserVote={item.link.currentUserVote}
+          lastUpdated={
+            item.link.updatedAt ? item.link.updatedAt : item.link.createdAt
+          }
+          favorited={item.link.currentUserFavorite}
+        />
+      );
+    })
+  }
+</ul>
